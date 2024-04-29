@@ -1,0 +1,17 @@
+---
+services:
+  two-sum:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    container_name: kymira-two-sum
+    # Keep the container open indefinitely
+    command: /bin/ash -c "while sleep 1000; do :; done"
+    environment:
+      - PYTHONPATH=/workspaces/two-sum/src:/workspaces/two-sum
+    stdin_open: true
+    tty: true
+    working_dir: /workspaces/two-sum
+    volumes:
+      - ..:/workspaces/two-sum:rw
+...
