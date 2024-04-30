@@ -1,0 +1,144 @@
+# Specifies the version of the job spec format
+# This is an optional field, but highly recommended to be set. If not set, this
+#   will default to the latest version of the job spec format, which the file
+#   may or may not be compatible with.
+version: 1
+
+# Metadata about the job itself
+# This corresponds to v1 of the metadata spec
+job:
+  # The display name for the job
+  name: "Two Sum"
+  # An array of string tags for the job
+  tags:
+    - leetcode
+    - python
+  # The difficulty level of the job
+  # This is an optional field. If specified, the value must be one of the
+  #   following: easy, medium, hard, insane, sota
+  # If this field is not specified, the value will be saved as "unrated"
+  difficulty: easy
+  # A brief description of the job
+  # This should be a short, one-line description for the job. Longer
+  #   descriptions may not always be fully displayed in the UI depending on
+  #   the viewport size of client devices. Markdown formatting is supported.
+  brief: |
+    Given an array of integers and an integer target, return indices of two
+    numbers such that they add up to target.
+  # A detailed description to show on the UI
+  # This description should be tailored towards users rather than the
+  #   assistant who will tackle the job. Markdown formatting is supported.
+  detailed: |
+    Define a Python function called "twoSum" that accepts two parameters. The
+    first parameter will be an array of integers, and the second parameter
+    will be an integer. The function should return a list of two integers that
+    are the indices of the two numbers in the input array that add up to the
+    target integer. You may assume that each input would have exactly one
+    solution, and you may not use the same element twice. You can return the
+    answer in any order.
+
+# Information about the goal that the job is trying to achieve
+# This information should be tailored to the assistant working on the job. The
+#   information in this section will also be available on the UI, but it won't
+#   be as prominently displayed as the main description strings in the `job`
+#   section.
+# Multiple formats are supported for specifying the goal of a job. Exactly one
+#   format may be specified, where the name of the format is specified as the
+#   key nested under the `goal` key. Available formats are:
+# - zeroshot: Provides a description of the goal using natural language. Does
+#     not provide any examples.
+# - nshot: Provides a description of the goal using natural language and
+#     provides examples of the expected input and output.
+# The `zeroshot` format uses the same format as the `nshot` format, except it
+#   does not allow for an `examples` key to be specified. All strings will be
+#   displayed as markdown when displayed on the UI.
+goal:
+  nshot:
+    # A description of the goal of the job
+    # This is an optional field. If not provided, the detailed description from
+    #   the job metadata will be used as the value of this field.
+    description: |
+      Define a Python function called "twoSum" that accepts two parameters.
+      The first parameter will be an array of integers, and the second
+      parameter will be an integer. The function should return a list of two
+      integers that are the indices of the two numbers in the input array that
+      add up to the target integer. You may assume that each input would have
+      exactly one solution, and you may not use the same element twice. You
+      can return the answer in any order.
+
+      A Python file with the required function signature has been provided in
+      the `src` folder. Add the necessary code to implement the function
+      correctly.
+    # Examples to illustrate the goal of the job
+    # At least one example must be provided. Example strings can use markdown,
+    #   though doing so is primarily for benefit of the UI rather than for the
+    #   assistant's benefit.
+    examples:
+      - |
+        Example 1:
+        ```
+        Input: nums = [2,7,11,15], target = 9
+        Output: [0,1]
+        Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+        ```
+
+      - |
+        Example 2:
+        ```
+        Input: nums = [3,2,4], target = 6
+        Output: [1,2]
+        ```
+
+      - |
+        Example 3:
+        ```
+        Input: nums = [3,3], target = 6
+        Output: [0,1]
+        ```
+
+# Defines steps that the Kymira executor must run to prepare its workspace for
+#   running the job.
+preinit:
+  # A list of binaries that must be present in the executor's environment to
+  #   run the job.
+  # This is an optional field. If not specified, no binaries are required.
+  requires:
+    # If a binary simply needs to be present without any additional restrictions,
+    #   the binary can be specified using a key name with no nested fields. The
+    #   name of the key will be the name of the binary that needs to be present.
+    docker:
+    # Required binaries can also be defined using nested keys to modify the
+    #   default values used when searching for the binary.
+    python:
+      # If the name key is present, the value of the key will be used as the
+      #   name of the binary that needs to be present.
+      name: python3
+      # Specifies information about the version that the binary must have. This
+      #   field must be defined as a string.
+      # If the binary's version number is a valid semantic version string, all
+      #   comparisons will be handled using npm's `semvar` package. The string
+      #   may contain any characters that are valid for the `semvar.satisfies()`
+      #   method.
+      # If the binary's version number is not a valid semantic version string,
+      #   all comparisons will be handled using plain string comparison.
+      # Note: `"*"` is a valid value for this field, and will match any
+      #   version of the binary if the binary uses semantic versioning.
+      #   However, there is little reason to specify this value, as the
+      #   `version` key could simply be omitted entirely if the binary's
+      #   version number is not important. Specifying `"*"` will not match any
+      #   version of the binary if the binary doesn't use semantic versioning,
+      #   unless the binary returns `*` when queried for its version.
+      version: ">=3.11"
+      # Specifies the flag(s) needed to query the binary for its version number.
+      # If this isn't specified, the binary will be queried using
+      #   `[name] --version`, where `[name]` is the value of the `name` key (or
+      #   the `requires` sub-key's name if the `name` key is not present).
+      args: --version
+
+init:
+
+main:
+
+validate:
+
+cleanup:

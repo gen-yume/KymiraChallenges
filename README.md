@@ -1,4 +1,5 @@
 # Kymira Challenges
+## Overview
 This repository contains the challenges used to evaluate AI agents from within
 Kymira. The repository is laid out using the following structure:
 ```
@@ -20,6 +21,7 @@ Kymira. The repository is laid out using the following structure:
     └── challengeE2
 ```
 
+## Difficulty Levels
 Each challenge difficulty level is designed to target a specific class of LLM
 models, plus an approximate workload implementation complexity. The current
 guidelines for the difficulty levels are as follows:
@@ -64,3 +66,12 @@ The goals for each tier are as follows:
 Each challenge is provided as a self-contained folder. Each folder provides
 a docker-compose file, allowing Kymira to set up a container and run the
 workload within the container when evaluating an assistant+workload implementation.
+
+## Job Specs
+Kymira requires that each job be defined using a YAML-based specification so
+that Kymira executors understand how to handle the job. These specifications
+are normally provided via the Kymira UI, but are also defined within this
+repository as `job.yml` files in each challenge's folder for demonstration
+purposes. An `example-job-spec.yml` file is also present in the root folder
+of this repository, which contains a highly commented version of the `two-sum`
+challenge's `job.yml` file.
